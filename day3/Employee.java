@@ -59,8 +59,7 @@ public class Employee extends User implements Comparable {
 				emp.add(e);
 				projectEmp.put(e.project, emp);
 			} else {
-				ArrayList<Employee> temp = projectEmp.get(e.project);
-				temp.add(e);
+				 projectEmp.get(e.project).add(e);
 			}
 		});
 		for (Entry<Project, ArrayList<Employee>> i : projectEmp.entrySet()) {

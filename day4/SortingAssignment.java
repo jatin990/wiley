@@ -33,15 +33,16 @@ public class SortingAssignment {
 		set.add(10);
 		set.add("Hi");
 		set.add(1);
-		set.stream().forEach(e->{
-			if(e instanceof User) {
-				User i=(User)e;
-				System.out.println("User id: "+i.getId()+", User name: "+i.getName());
-			}
-			else {
-				System.out.println(e);
-			}
-		});
+//		set.stream().forEach(e->{
+//			if(e instanceof User) {
+//				User i=(User)e;
+//				System.out.println("User id: "+i.getId()+", User name: "+i.getName());
+//			}
+//			else {
+//				System.out.println(e);
+//			}
+//		});
+		set.stream().forEach(System.out::println);
 	}
 
 }
@@ -192,7 +193,9 @@ class User {
         this.id = id;
         this.name = name;
     }
-
+    public String toString() {
+		return id + " " + name ;
+	}
     public int getId() {
         return id;
     }

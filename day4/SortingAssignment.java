@@ -26,7 +26,7 @@ public class SortingAssignment {
 
 	@SuppressWarnings("unchecked")
 	public static void main(String[] args) {
-		TreeSet set=new TreeSet<>(new sortByStringUserIdInt());
+		TreeSet set=new TreeSet<>(new sortByStringInt());
 		set.add("hello");
 		set.add(new User(10,"user10"));
 		set.add(new User(20,"user20"));
@@ -137,6 +137,35 @@ class sortByUserNameStringInt implements Comparator{
 	}
 }
 
+
+class sortByStringInt implements Comparator{
+	@Override
+	public int compare(Object o1, Object o2) {
+		if(o1 instanceof Integer) {
+			if( o2 instanceof Integer) {
+				return (Integer)o1-(Integer)(o2);
+			}else if(o2 instanceof User){
+				return 1;
+			}
+			return 1;
+		}else if(o1 instanceof User) {
+			if( o2 instanceof User) {
+				return ((User) o1).getName().compareTo(((User) o2).getName());
+			}else if(o2 instanceof Integer){
+				return Integer.MIN_VALUE;
+			}
+			return ((User) o1).getName().compareTo((String) o2);
+		}else if(o1 instanceof String) {
+			if( o2 instanceof String) {
+				return ((String) o1).compareTo((String)(o2));
+			}else if(o2 instanceof Integer){
+				return Integer.MIN_VALUE;
+			}
+			return ((User) o2).getName().compareTo((String) o1);
+		}
+		return 0;
+	}
+}
 //class GenericComp implements Comparator{
 //	@Override
 //	public List<String> order=new ArrayList();

@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Stream;
 
 
 
@@ -60,20 +61,30 @@ class Bank {
 		System.out.println("Customer id: "+c.getId()+", Name: "+c.getName()+", Balance: "+c.getAccount_balance());
 	}
 
-	public void deposit(String customer_id) {
+	public void deposit(String customer_id, int i) {
 		Customer customer=this.customers.get(customer_id);
-		this.addTransaction(customer_id,1000);
-		customer.setAccount_balance(customer.getAccount_balance()+1000);
+		this.addTransaction(customer_id,i,"1");
+		customer.setAccount_balance(customer.getAccount_balance()+i);
 	}
-
-	private void addTransaction(String customer_id,long amount) {
+	// 1->deposit 0->credit
+	private void addTransaction(String customer_id,long amount, String type) {
 		List<TransactionHistory> transaction= this.transactions.get(customer_id);
 		if(transaction==null) {
-			this.transactions.put(customer_id,Arrays.asList(new TransactionHistory(customer_id,1000,"3","1")));
+			this.transactions.put(customer_id,Arrays.asList(new TransactionHistory(customer_id,1000,"3",type)));
 		}
 		else {
-			this.transactions.put(customer_id,Arrays.asList(new TransactionHistory(customer_id,1000,"3","1")));
+			this.transactions.put(customer_id,Arrays.asList(new TransactionHistory(customer_id,1000,"3",type)));
 		}
+	}
+
+	public void credit(String customer_id, int i) {
+		Customer customer=this.customers.get(customer_id);
+		this.addTransaction(customer_id,i,"0");
+		customer.setAccount_balance(customer.getAccount_balance()+i);
+	}
+	
+	public Stream<TransactionHistory> TransHistory(String customer_id, int number) {
+		return this.getTransactions().get(customer_id).stream().limit(number);
 	}
 }
 
@@ -143,6 +154,10 @@ class TransactionHistory {
 		this.transaction_type = transaction_type;
 		this.timestamp = new Date();
 	}
+	@Override
+	public String toString() {
+		return customer_id+", Amount: "+amount+", Status: "+status+", Type: "+transaction_type+", Time: "+timestamp;
+	}
 }
 
 public class UserPortal {
@@ -190,7 +205,7 @@ public class UserPortal {
 		bank.setTransactions(transactions);
 		
 		String choice="0";
-		while (!choice.equals("5")) {
+		while (!choice.equals("3")) {
 			displayOptions();
 			choice = sc.nextLine();
 			switch (choice) {
@@ -207,6 +222,8 @@ public class UserPortal {
 					up.setCustomer(customer);
 					up.goToAuthenticatedMenu();
 				}
+				up.setAuthenticated(false);
+				up.setCustomer(null);
 				break;
 			case "3":
 				System.out.println("exiting...");
@@ -219,7 +236,7 @@ public class UserPortal {
 	}
 	private void goToAuthenticatedMenu() {
 		String choice="0";
-		while (!choice.equals("4")) {
+		while (!choice.equals("5")) {
 			displayOptionsAuthenticated();
 			choice = sc.nextLine();
 			switch (choice) {
@@ -227,10 +244,15 @@ public class UserPortal {
 				bank.displayAccountInfo(this.customer.getId());
 				break;
 			case "2":
-				bank.deposit(this.customer.getId());
+				bank.deposit(this.customer.getId(),1000);
 				break;
 			case "3":
-				
+				bank.credit(this.customer.getId(),1000);
+				break;
+			case "4":
+				bank.TransHistory(this.customer.getId(),2).forEach(System.out::println);;
+				break;
+			case "5":
 				break;
 			default:
 				break;
@@ -242,7 +264,7 @@ public class UserPortal {
 		System.out.println(options);
 	}
 	public static void displayOptionsAuthenticated() {
-		String options = "1) Check account Info  \n2) Deposit\n3) Withdraw \n4)Logout";
+		String options = "1) Check account Info  \n2) Deposit\n3) Withdraw \n4)Check transaction history\n 5)Logout";
 		System.out.println(options);
 	}
 	public Boolean getAuthenticated() {

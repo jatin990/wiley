@@ -80,7 +80,7 @@ class Bank {
 	public void credit(String customer_id, int i) {
 		Customer customer=this.customers.get(customer_id);
 		this.addTransaction(customer_id,i,"0");
-		customer.setAccount_balance(customer.getAccount_balance()+i);
+		customer.setAccount_balance(customer.getAccount_balance()-i);
 	}
 	
 	public Stream<TransactionHistory> TransHistory(String customer_id, int number) {

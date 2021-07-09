@@ -13,11 +13,12 @@ public class Streams {
 	@SuppressWarnings("unused")
 	public static void main(String[] args) {
 		 List<Integer> nums = Arrays.asList(1,2,5,6,10);
-
+//		 nums.stream().
+//		 nums.parallelstream().
         Optional<Integer> result = nums.stream()
                 //.reduce((n, a)-> Math.max(n,a));
-                  .reduce(Math::max);
-                //.ifPresent(System.out::println);
+                  .reduce((a,b)->a+b);
+//                .ifPresent(i->System.out.println(i));
 
         System.out.println("result "+result.get());
 
@@ -25,12 +26,12 @@ public class Streams {
 
         //UserString userString = new UserString();
 
-        List<String> sortedStrings = strings.
-                                            stream().
-                                            //sorted((s1,s2)-> s1.compareTo(s2)).
-                                            sorted(String::compareTo).
-                                            filter(i->i.endsWith("e")).
-                                            collect(Collectors.toList());
+//        List<String> sortedStrings = strings.
+//      		                          stream()
+//                                         .map(System.out::println).
+//                                            sorted((s1,s2)-> s1.compareTo(s2)).
+//                                            filter(i->i.endsWith("e")).
+//                                            collect(Collectors.toList());
 //                                            forEach(i->System.out.println(i));
 
         //List<Integer> evenNums = new ArrayList<>();

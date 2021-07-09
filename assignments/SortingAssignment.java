@@ -1,4 +1,4 @@
-package wiley.programs.day4;
+package wiley.programs.assignments;
 
 import java.util.ArrayList;
 import java.util.Comparator;

@@ -1,27 +1,7 @@
 package wiley.programs.day11;
 
-public class Main {
 
-	public static void main(String[] args) {
-		Stack s = new Stack(5);
-		s.push(1);
-		s.push(2);
-		s.push(3);
-		s.push(4);
-		s.push(5);
-
-		 s.pop();
-//		 s.pop();
-//		 s.pop();
-
-		 System.out.println(s.peek());
-		System.out.println(s.pop());
-		System.out.println(s.peek());
-	}
-
-}
-
-class Stack {
+public class Stack {
 	private int CAPACITY;
 	private int filled = 0;
 	private int s[];
@@ -59,6 +39,22 @@ class Stack {
 			return -1;
 		}
 		return s[filled];
+	}
+	public static void main(String[] args) {
+		Stack s = new Stack(5);
+		s.push(1);
+		s.push(2);
+		s.push(3);
+		s.push(4);
+		s.push(5);
+
+		 s.pop();
+//		 s.pop();
+//		 s.pop();
+
+		 System.out.println(s.peek());
+		System.out.println(s.pop());
+		System.out.println(s.peek());
 	}
 
 }
